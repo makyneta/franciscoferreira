@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pt-pt" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 | Página não encontrada</title>
+    
+    <!-- Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Fonte -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- Variáveis (Mesmas da página principal) --- */
+        :root {
+            --bg-color: #0b0c10;
+            --text-main: #ffffff;
+            --text-secondary: #9ca3af;
+            --accent-red: #DC1C2E;
+            --accent-blue: #45a29e;
+            --border-light: rgba(255, 255, 255, 0.15);
+        }
+
+        [data-theme="light"] {
+            --bg-color: #f4f7f6;
+            --text-main: #1f2937;
+            --text-secondary: #6b7280;
+            --accent-red: #c0392b;
+            --accent-blue: #66fcf1;
+            --border-light: rgba(0, 0, 0, 0.1);
+        }
+
+        /* --- Reset --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background 0.5s ease, color 0.5s ease;
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- Navegação --- */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            backdrop-filter: blur(8px);
+            background: linear-gradient(to bottom, rgba(11, 12, 16, 0.9), transparent);
+        }
+        [data-theme="light"] .navbar {
+            background: linear-gradient(to bottom, rgba(244, 247, 246, 0.9), transparent);
+        }
+
+        .logo { font-weight: 600; font-size: 1rem; letter-spacing: 1px; text-transform: uppercase; }
+        .logo span { color: var(--accent-red); }
+
+        .theme-btn {
+            background: transparent;
+            border: 1px solid var(--border-light);
+            color: var(--text-main);
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: 0.3s;
+            display: grid; place-items: center;
+        }
+        .theme-btn:hover { transform: rotate(180deg); border-color: var(--accent-red); color: var(--accent-red); }
+
+        /* --- Container do Erro --- */
+        .error-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 120px 20px 60px; /* Compensa navbar */
+        }
+
+        /* Background Orbs */
+        .error-wrapper::before {
+            content: ''; position: absolute; top: 20%; left: 10%;
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, var(--accent-blue) 0%, transparent 70%);
+            opacity: 0.1; filter: blur(100px);
+        }
+
+        .error-content {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            max-width: 600px;
+            animation: floatUp 1s ease-out;
+        }
+
+        /* Código 404 */
+        .error-code {
+            font-family: 'Playfair Display', serif;
+            font-size: 10rem;
+            line-height: 1;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--text-main), var(--text-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0;
+            position: relative;
+            display: inline-block;
+        }
+
+        /* Ícone flutuante no zero */
+        .house-icon {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 4rem;
+            color: var(--accent-red);
+            opacity: 0.8;
+            animation: floatBadge 6s infinite ease-in-out;
+        }
+
+        .error-title {
+            font-size: 2rem;
+            font-weight: 500;
+            margin-bottom: 15px;
+            color: var(--text-main);
+        }
+
+        .error-desc {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+
+        /* Botão de Volta */
+        .btn-back {
+            display: inline-block;
+            text-decoration: none;
+            color: var(--text-main);
+            border: 1px solid var(--border-light);
+            padding: 14px 32px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+            transition: 0.3s;
+            background: rgba(255, 255, 255, 0.02);
+        }
+        .btn-back:hover {
+            background: var(--text-main);
+            color: var(--bg-color);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        /* --- Footer --- */
+        footer {
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid var(--border-light);
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        footer a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        footer a:hover {
+            color: var(--accent-red);
+        }
+
+        /* Animações */
+        @keyframes floatUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes floatBadge { 0%, 100% { transform: translate(-50%, -50%); } 50% { transform: translate(-50%, -60%); } }
+
+        /* --- Mobile Responsive --- */
+        @media (max-width: 600px) {
+            .error-code { font-size: 6rem; }
+            .house-icon { font-size: 2.5rem; }
+            .error-title { font-size: 1.5rem; }
+            .error-desc { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Nav -->
+    <nav class="navbar">
+        <div class="logo">Francisco <span>Ferreira</span></div>
+        <button class="theme-btn" id="themeToggle"><i class="fa-solid fa-moon"></i></button>
+    </nav>
+
+    <!-- Conteúdo do Erro -->
+    <div class="error-wrapper">
+        <div class="error-content">
+            <!-- Código Grande -->
+            <h1 class="error-code">
+                40<span style="position: relative;"><i class="fa-solid fa-house house-icon"></i></span>4
+            </h1>
+            
+            <h2 class="error-title">Ops! Página não encontrada</h2>
+            
+            <p class="error-desc">
+                Parece que o imóvel que procura mudou de endereço.<br>
+                Verifica o URL ou volta à página inicial.
+            </p>
+
+            <a href="../" class="btn-back">Voltar ao Início</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <a href="https://makyneta.github.io">Copyright &copy; <span id="ano"></span> Makyneta unipessoal, Lda. Todos os direitos reservados.</a>
+    </footer>
+
+    <script>
+        // 1. Theme Logic
+        const toggle = document.getElementById('themeToggle');
+        const icon = toggle.querySelector('i');
+        const html = document.documentElement;
+
+        toggle.addEventListener('click', () => {
+            const current = html.getAttribute('data-theme');
+            const next = current === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', next);
+            icon.className = next === 'dark' ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
+        });
+
+        // 2. Ano
+        document.getElementById('ano').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
