@@ -21,12 +21,21 @@
 </head>
 <body>
 
-    <!-- LOADING SCREEN -->
+    <!-- CUSTOM CURSOR -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <!-- LOADING SCREEN TRADICIONAL -->
     <div class="loader">
-        <div class="loader-spinner"></div>
+        <div class="spinner"></div>
     </div>
 
-    <!-- Fundo Animado -->
+    <!-- AMBIENT BACKGROUND BLOBS -->
+    <div class="ambient-blob blob-1"></div>
+    <div class="ambient-blob blob-2"></div>
+    <div class="ambient-blob blob-3"></div>
+
+    <!-- Animate Back -->
     <canvas id="bg-canvas"></canvas>
 
     <!-- Nav -->
@@ -37,28 +46,35 @@
     <!-- Hero Section -->
     <header class="hero">
         <div class="hero-content">
-            
+
+            <!-- Intro -->
             <div class="intro-block">
                 <span class="hero-tag reveal">Consultor Imobiliário</span>
-                <h1 class="reveal delay-100">Rigor técnico e dedicação humana.</h1>
+                <h1 class="split-text reveal">Rigor técnico e dedicação humana.</h1>
+                
                 <p class="hero-desc reveal delay-200">Especialista em compra, venda, arrendamento, trespasse e avaliação de imóveis. Confiança construída com resultados.</p>
-                <a href="https://www.remax.pt/francisco_mferreira" class="btn-portfolio reveal delay-300" target="_blank">Ver Portfólio</a>
+                
+                <a href="https://www.remax.pt/francisco_mferreira" class="btn-portfolio reveal delay-300" target="_blank">
+                    <span class="btn-text">Ver Portfólio</span>
+                </a>
             </div>
 
+            <!-- Slogan -->
             <div class="slogan-divider reveal delay-300">
                 Acompanhamento, Clareza, Segurança 🍀
             </div>
 
+            <!-- Contact -->
             <div class="contact-clean">
                 <a href="tel:+351938862962" class="contact-row reveal delay-100">
                     <div class="c-icon"><i class="fa-solid fa-phone"></i></div>
                     <div class="c-data">
-                        <span class="c-label">Telefone & WhatsApp</span>
+                        <span class="c-label">Telefone</span>
                         <span class="c-value">+351 938 862 962</span>
                     </div>
                 </a>
 
-                <a href="mailto:francisco.mferreira@remax.pt" class="contact-row reveal delay-200">
+                <a href="mailto:franciscomferreira@remax.pt" class="contact-row reveal delay-200">
                     <div class="c-icon"><i class="fa-solid fa-envelope"></i></div>
                     <div class="c-data">
                         <span class="c-label">Email</span>
@@ -77,9 +93,9 @@
 
         </div>
 
+        <!-- Image -->
         <div class="hero-image reveal">
             <div class="img-container" id="tiltCard">
-                <!-- Placeholder mantido. Volta a usar o teu caminho local -->
                 <img src="assets/images/franciscoferreiraremax.jpg" alt="Francisco Ferreira" class="img-main">
                 
                 <div class="remax-float">

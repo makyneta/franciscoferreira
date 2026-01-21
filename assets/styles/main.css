@@ -1,7 +1,7 @@
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,500;1,500&display=swap');
 
-/* --- Variáveis (Apenas Dark Mode) --- */
+/* --- Variáveis --- */
 :root {
     --bg-color: #0b0c10;
     --text-main: #ffffff;
@@ -21,6 +21,8 @@
     padding: 0;
     box-sizing: border-box;
     scroll-behavior: smooth;
+    cursor: none;
+    /* Esconde o cursor padrão */
 }
 
 body {
@@ -35,7 +37,46 @@ body {
     flex-direction: column;
 }
 
-/* --- Loading Animation --- */
+/* --- Custom Cursor (Com Blur) --- */
+.cursor-dot,
+.cursor-outline {
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    z-index: 9999;
+    pointer-events: none;
+}
+
+.cursor-dot {
+    width: 8px;
+    height: 8px;
+    background-color: var(--text-main);
+}
+
+.cursor-outline {
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    transition: width 0.3s, height 0.3s, border-color 0.3s, background-color 0.3s, filter 0.3s;
+}
+
+/* 
+   Estado Hover: Pequeno Blur
+   Aumenta o tamanho, adiciona fundo suave e aplica filtro de blur
+*/
+body.hovering .cursor-outline {
+    width: 60px;
+    height: 60px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+    /* O efeito de blur solicitado */
+    filter: blur(3px);
+    opacity: 0.8;
+}
+
+/* --- Loading Animation (Tradicional Spinner) --- */
 .loader {
     position: fixed;
     top: 0;
@@ -43,11 +84,11 @@ body {
     width: 100%;
     height: 100%;
     background-color: var(--bg-color);
-    z-index: 9999;
+    z-index: 10000;
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: opacity 0.6s ease, visibility 0.6s ease;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
 }
 
 .loader.hidden {
@@ -56,18 +97,73 @@ body {
     pointer-events: none;
 }
 
-.loader-spinner {
+.spinner {
     width: 50px;
     height: 50px;
     border: 3px solid rgba(255, 255, 255, 0.1);
+    /* Fundo do anel */
     border-top: 3px solid var(--accent-red);
+    /* Parte giratória colorida */
     border-radius: 50%;
     animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* --- Ambient Background Blobs --- */
+.ambient-blob {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(80px);
+    z-index: 1;
+    opacity: 0.15;
+    animation: floatBlob 20s infinite alternate;
+}
+
+.blob-1 {
+    width: 400px;
+    height: 400px;
+    background: var(--accent-blue);
+    top: -10%;
+    right: -5%;
+    animation-duration: 25s;
+}
+
+.blob-2 {
+    width: 300px;
+    height: 300px;
+    background: var(--accent-red);
+    bottom: 10%;
+    left: -10%;
+    animation-duration: 30s;
+}
+
+.blob-3 {
+    width: 200px;
+    height: 200px;
+    background: #ffffff;
+    top: 40%;
+    left: 40%;
+    opacity: 0.05;
+    animation: floatBlob 15s infinite alternate-reverse;
+}
+
+@keyframes floatBlob {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    100% {
+        transform: translate(30px, 50px) scale(1.1);
+    }
 }
 
 /* --- Canvas Background --- */
@@ -79,7 +175,7 @@ body {
     height: 100%;
     z-index: 0;
     pointer-events: none;
-    opacity: 0.4;
+    opacity: 0.3;
 }
 
 /* --- Navegação --- */
@@ -165,12 +261,28 @@ body {
     border: 1px solid rgba(220, 28, 46, 0.2);
 }
 
+/* Animação de Texto Escalonada */
 h1 {
     font-family: 'Playfair Display', serif;
     font-size: 3rem;
     line-height: 1.1;
     font-weight: 500;
     color: var(--text-main);
+    overflow: hidden;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.split-char {
+    display: inline-block;
+    transform: translateY(115%);
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity: 0;
+}
+
+h1.active .split-char {
+    transform: translateY(0);
+    opacity: 1;
 }
 
 .hero-desc {
@@ -180,6 +292,7 @@ h1 {
     font-weight: 300;
 }
 
+/* Botão Normal */
 .btn-portfolio {
     display: inline-flex;
     align-items: center;
@@ -193,32 +306,39 @@ h1 {
     text-transform: uppercase;
     letter-spacing: 1.5px;
     font-weight: 500;
-    transition: all 0.3s ease;
-    width: fit-content;
-    position: relative;
-    overflow: hidden;
     background: transparent;
+    position: relative;
+    width: fit-content;
+    transition: all 0.3s ease;
+    z-index: 1;
+}
+
+.btn-text {
+    position: relative;
+    z-index: 2;
 }
 
 .btn-portfolio::before {
     content: '';
     position: absolute;
     top: 0;
-    left: -100%;
+    left: 0;
     width: 100%;
     height: 100%;
     background: var(--accent-red);
-    transition: all 0.3s ease;
-    z-index: -1;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+    z-index: 0;
+}
+
+.btn-portfolio:hover::before {
+    transform: scaleX(1);
+    transform-origin: left;
 }
 
 .btn-portfolio:hover {
     color: white;
-    box-shadow: 0 5px 15px rgba(220, 28, 46, 0.3);
-}
-
-.btn-portfolio:hover::before {
-    left: 0;
 }
 
 .slogan-divider {
@@ -313,10 +433,8 @@ h1 {
     transform-style: preserve-3d;
     transform: rotateY(0deg) rotateX(0deg);
     transition: transform 0.1s ease-out;
-    cursor: pointer;
 }
 
-/* Elemento brilhante interno */
 .img-container::after {
     content: '';
     position: absolute;
@@ -397,18 +515,20 @@ footer {
     border-color: var(--accent-red);
 }
 
-/* --- Animation Keyframes --- */
+/* --- Keyframes --- */
 @keyframes floatBadge {
-    0%, 100% { transform: translateZ(50px) translateY(0); }
-    50% { transform: translateZ(50px) translateY(-12px); }
+
+    0%,
+    100% {
+        transform: translateZ(50px) translateY(0);
+    }
+
+    50% {
+        transform: translateZ(50px) translateY(-12px);
+    }
 }
 
-@keyframes floatCard {
-    0%, 100% { margin-top: 0; }
-    50% { margin-top: -10px; }
-}
-
-/* Classes para JS Reveal */
+/* Classes para JS Reveal Padrão */
 .reveal {
     opacity: 0;
     transform: translateY(40px);
@@ -420,14 +540,37 @@ footer {
     transform: translateY(0);
 }
 
-.delay-100 { transition-delay: 0.1s; }
-.delay-200 { transition-delay: 0.2s; }
-.delay-300 { transition-delay: 0.3s; }
-.delay-400 { transition-delay: 0.4s; }
+.delay-100 {
+    transition-delay: 0.1s;
+}
+
+.delay-200 {
+    transition-delay: 0.2s;
+}
+
+.delay-300 {
+    transition-delay: 0.3s;
+}
+
+.delay-400 {
+    transition-delay: 0.4s;
+}
 
 /* --- Mobile Responsive --- */
 @media (max-width: 900px) {
-    .navbar { padding: 15px 20px; }
+    * {
+        cursor: auto;
+    }
+
+    /* Volta cursor normal no mobile */
+    .cursor-dot,
+    .cursor-outline {
+        display: none;
+    }
+
+    .navbar {
+        padding: 15px 20px;
+    }
 
     .hero {
         flex-direction: column-reverse;
@@ -451,11 +594,17 @@ footer {
         margin-bottom: 20px;
     }
 
-    h1 { font-size: 2.2rem; }
+    h1 {
+        font-size: 2.2rem;
+    }
 
-    .contact-clean { width: 100%; }
+    .contact-clean {
+        width: 100%;
+    }
 
-    .btn-portfolio { width: 100%; }
+    .btn-portfolio {
+        width: 100%;
+    }
 
     .slogan-divider {
         padding-left: 0;
@@ -485,5 +634,7 @@ footer {
         border: none;
     }
 
-    .img-container { transform: none !important; }
+    .img-container {
+        transform: none !important;
+    }
 }
